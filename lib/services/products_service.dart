@@ -18,4 +18,18 @@ class ProductsService {
       throw Exception('Failed to load products');
     }
   }
+  Future<List<Product>> getAllProductsByCategory(String categoryName) async {
+    http.Response response = await http.get(
+      Uri.parse('https://fakestoreapi.com/products/category/$categoryName'),
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+
+      List<Product> products =
+          data.map((product) => Product.fromJson(product)).toList();
+      return products;
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
 }
