@@ -1,18 +1,12 @@
-import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:mini_store/helper/api.dart';
 
 class CategoriesService {
   Future<List<dynamic>> getAllCategories() async {
-    http.Response response = await http.get(
-      Uri.parse('https://fakestoreapi.com/products/categories'),
+    var data = await Api().get(
+      url: 'https://fakestoreapi.com/products/categories',
     );
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
 
-      return data;
-    } else {
-      throw Exception('Failed to load Categories');
-    }
+    return data;
   }
 }
