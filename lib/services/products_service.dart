@@ -18,4 +18,10 @@ class ProductsService {
         data.map((product) => Product.fromJson(product)).toList();
     return products;
   }
+
+  Future<Product> addProduct() async {
+    var data = await Api().post(url: 'https://fakestoreapi.com/products');
+    Product product = Product.fromJson(data);
+    return product;
+  }
 }
