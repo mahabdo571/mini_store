@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mini_store/models/products_model.dart';
+import 'package:mini_store/services/products_service.dart';
+import 'package:mini_store/widgets/card_prodect.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -19,44 +22,28 @@ class Homepage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        height: 130,
-        width: 220,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 40,
-              color: Colors.grey,
-              spreadRadius: 1,
-              offset: Offset(5, 5),
-            ),
-          ],
-        ),
-        child: Card(
-          elevation: 10,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'handbag',
-                  style: TextStyle(color: Colors.grey, fontSize: 16),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 70),
+        child: FutureBuilder<List<Product>>(
+          future: ProductsService().getAllProducts(),
+          builder: (ctx, snapshot) {
+            if (snapshot.hasData) {
+              return GridView.builder(
+                clipBehavior: Clip.none,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.5,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 100,
                 ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      r'$233',
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
-                    ),
-                    Icon(FontAwesomeIcons.solidHeart, color: Colors.red),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                itemBuilder: (ctx, i) {
+                  return CardProdect();
+                },
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
       ),
     );
