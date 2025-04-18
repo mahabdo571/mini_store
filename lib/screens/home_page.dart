@@ -26,9 +26,12 @@ class Homepage extends StatelessWidget {
         padding: const EdgeInsets.only(left: 16, right: 16, top: 70),
         child: FutureBuilder<List<Product>>(
           future: ProductsService().getAllProducts(),
+
           builder: (ctx, snapshot) {
             if (snapshot.hasData) {
+              List<Product> products = snapshot.data!;
               return GridView.builder(
+                itemCount: products.length,
                 clipBehavior: Clip.none,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -37,7 +40,7 @@ class Homepage extends StatelessWidget {
                   mainAxisSpacing: 100,
                 ),
                 itemBuilder: (ctx, i) {
-                  return CardProdect();
+                  return CardProdect(product: products[i]);
                 },
               );
             } else {

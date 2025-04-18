@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mini_store/models/products_model.dart';
 
 class CardProdect extends StatelessWidget {
-  const CardProdect({super.key});
+  CardProdect({super.key, required this.product});
+  Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class CardProdect extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'handbag',
+                    product.title.substring(0, 15),
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                   SizedBox(height: 2),
@@ -39,7 +41,8 @@ class CardProdect extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        r'$233',
+                        r'$'
+                        '${product.price.toString()}',
                         style: TextStyle(color: Colors.grey, fontSize: 16),
                       ),
                       Icon(FontAwesomeIcons.solidHeart, color: Colors.red),
@@ -53,10 +56,7 @@ class CardProdect extends StatelessWidget {
         Positioned(
           right: 32,
           bottom: 80,
-          child: Image.network(
-            'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-            height: 100,
-          ),
+          child: Image.network(product.image, height: 100, width: 100),
         ),
       ],
     );

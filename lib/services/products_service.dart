@@ -3,10 +3,15 @@ import 'package:mini_store/models/products_model.dart';
 
 class ProductsService {
   Future<List<Product>> getAllProducts() async {
-    var data = await Api().get(url: 'https://fakestoreapi.com/products');
-    List<Product> products =
-        data.map((product) => Product.fromJson(product)).toList();
-    return products;
+    try {
+      var data = await Api().get(url: 'https://fakestoreapi.com/products');
+      List<Product> products =
+          data.map((product) => Product.fromJson(product)).toList();
+      return products;
+    } catch (e) {
+      print('errrrrrrr ${e.toString()}');
+      return [];
+    }
   }
 
   Future<List<Product>> getAllProductsByCategory(String categoryName) async {
